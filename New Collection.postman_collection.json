@@ -1,0 +1,271 @@
+{
+	"info": {
+		"_postman_id": "ccadf531-7446-4b0f-912b-7f9feab3db18",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45613401",
+		"_collection_link": "https://shubhamjain-1987985.postman.co/workspace/Shubham-Jain's-Workspace~b34587d6-a2e3-4815-8716-2bd01d2de6b9/collection/45613401-ccadf531-7446-4b0f-912b-7f9feab3db18?action=share&source=collection_link&creator=45613401"
+	},
+	"item": [
+		{
+			"name": "AllPerson",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Client-Type",
+						"value": "Mobile",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/api/person",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"person"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Client-Type",
+						"value": "Mobile",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Virat\",\n    \"email\": \"virat@example.com\",\n    \"registrationNumber\": \"REG020\",\n    \"personType\": \"CUSTOMER\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/person",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"person"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PersonById",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Client-Type",
+						"value": "Mobile",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/api/person/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"person",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "person delete by id",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Client-Type",
+						"value": "Mobile",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/api/person/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"person",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Delivery",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Client-Type",
+						"value": "Mobile",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"startTime\": \"2025-06-06T10:45:00Z\",\n    \"endTime\": \"2025-06-06T10:50:00Z\",\n    \"distance\": 13,\n    \"price\": 550,\n    \"deliveryMan\": {\n        \"id\": 5\n    },\n    \"customer\": {\n        \"id\": 19\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/delivery",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"delivery"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get delivery By Id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Client-Type",
+						"value": "Mobile",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/api/delivery/13",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"delivery",
+						"13"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get top delivery",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Client-Type",
+						"value": "Mobile",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/api/delivery/top?start=2025-06-06T09:00:00Z&end=2025-06-06T10:00:59Z",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"delivery",
+						"top"
+					],
+					"query": [
+						{
+							"key": "start",
+							"value": "2025-06-06T09:00:00Z"
+						},
+						{
+							"key": "end",
+							"value": "2025-06-06T10:00:59Z"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete delivery by id",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Client-Type",
+						"value": "Mobile",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/api/delivery/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"delivery",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
