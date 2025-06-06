@@ -1,33 +1,28 @@
+
 package com.bayzdelivery.jobs;
 
-import com.bayzdelivery.exceptions.GlobalExceptionHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Async;
+import com.bayzdelivery.model.Delivery;
+import com.bayzdelivery.service.DeliveryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 public class DelayedDeliveryNotifier {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DelayedDeliveryNotifier.class);
+    @Autowired
+    DeliveryService deliveryService;
 
-    /**
-     *  Use this method for the TASK 3
-     */
-    @Scheduled(fixedDelay = 30000)
-    public void checkDelayedDeliveries() {
-
-    }
-
-
-    /**
-     * This method should be called to notify customer support team
-     * It just writes notification on console but it may be email or push notification in real.
-     * So that this method should run in an async way.
-     */
-    @Async
-    public void notifyCustomerSupport() {
-        LOG.info("Customer support team is notified!");
+    @Scheduled(fixedRate = 60000)
+    public void notifyDelayedDeliveries() {
+        List<Delivery> openDeliveries = deliveryService.findOngoingDeliveries();
+        for (Delivery delivery : openDeliveries) {
+            System.out.println("[NOTIFY-CS] Delivery ID " + delivery.getId() + " has exceeded 45 minutes.");
+        }
     }
 }

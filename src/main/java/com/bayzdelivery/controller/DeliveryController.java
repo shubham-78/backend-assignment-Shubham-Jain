@@ -1,31 +1,50 @@
+
 package com.bayzdelivery.controller;
 
 import com.bayzdelivery.model.Delivery;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 import com.bayzdelivery.service.DeliveryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
 @RestController
+@RequestMapping("/delivery")
 public class DeliveryController {
 
-  @Autowired
-  DeliveryService deliveryService;
+    @Autowired
+    DeliveryService deliveryService;
 
-  @PostMapping(path ="/delivery")
-  public ResponseEntity<Delivery> createNewDelivery(@RequestBody Delivery delivery) {
-    return ResponseEntity.ok(deliveryService.save(delivery));
-  }
+    @GetMapping("/top")
+    public ResponseEntity<List<Map<String, Object>>> getTopDeliveryMen(
+            @RequestParam("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant start,
+            @RequestParam("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant end) {
+        return ResponseEntity.ok(deliveryService.getTopDeliveryMenWithAverageCommission(start, end));
+    }
 
-  @GetMapping(path = "/delivery/{delivery-id}")
-  public ResponseEntity<Delivery> getDeliveryById(@PathVariable(name="delivery-id",required=true)Long deliveryId){
-    Delivery delivery = deliveryService.findById(deliveryId);
-    if (delivery !=null)
-      return ResponseEntity.ok(delivery);
-    return ResponseEntity.notFound().build();
-  }
+    @GetMapping("/{delivery-id}")
+    public ResponseEntity<Delivery> getDeliveryById(@PathVariable("delivery-id") Long deliveryId) {
+        Delivery delivery = deliveryService.findById(deliveryId);
+        return (delivery != null) ? ResponseEntity.ok(delivery) : ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<Delivery> createNewDelivery(@RequestBody Delivery delivery) {
+        return ResponseEntity.ok(deliveryService.save(delivery));
+    }
+
+    @DeleteMapping("/{delivery-id}")
+    public ResponseEntity<Void> deleteDeliveryById(@PathVariable("delivery-id") Long deliveryId) {
+        Delivery delivery = deliveryService.findById(deliveryId);
+        if(delivery==null){
+            return ResponseEntity.notFound().build();
+        }
+        deliveryService.delete(deliveryId);
+        return ResponseEntity.noContent().build();
+    }
 }

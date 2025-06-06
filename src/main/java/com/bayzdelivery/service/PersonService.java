@@ -10,4 +10,6 @@ public interface PersonService {
 
   public Person findById(Long personId);
 
+  void delete(Long personId);
+
 }

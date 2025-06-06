@@ -1,13 +1,14 @@
+
 package com.bayzdelivery.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import com.bayzdelivery.repositories.PersonRepository;
+import com.bayzdelivery.exceptions.UserConflictException;
 import com.bayzdelivery.model.Person;
+import com.bayzdelivery.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -17,18 +18,24 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<Person> getAll() {
-        List<Person> personList = new ArrayList<>();
-        personRepository.findAll().forEach(personList::add);
-        return personList;
+        return (List<Person>) personRepository.findAll();
     }
 
-    public Person save(Person p) {
-        return personRepository.save(p);
+    @Override
+    public Person save(Person person) {
+        Optional<Person> existing = personRepository.findByEmail(person.getEmail());
+        if (existing.isPresent()) {
+            throw new UserConflictException("User is already registered. Please try logging through UserId and Password");
+        }
+        return personRepository.save(person);
     }
 
     @Override
     public Person findById(Long personId) {
-        Optional<Person> dbPerson = personRepository.findById(personId);
-        return dbPerson.orElse(null);
+        return personRepository.findById(personId).orElse(null);
+    }
+
+    public void delete(Long personId){
+        personRepository.deleteById(personId);
     }
 }
